@@ -1,6 +1,7 @@
 import type { Answer } from "../models/Answer";
 import type { AnswersState } from "../models/AnswersState";
 import type { Question } from "../models/Question";
+import "../styles/QuizInfo.css";
 
 type QuizInfoProps = {
   answers: AnswersState;
@@ -21,7 +22,12 @@ function QuizInfo({
   const isCorrect = answer.id === question.correct;
 
   return (
-    <div key={answer.id}>
+    <div
+      key={answer.id}
+      className={`answer-option 
+        ${isAnswered && isCorrect ? "correct" : ""} 
+        ${isAnswered && !isCorrect && isSelected ? "wrong" : ""}`}
+    >
       <input
         type="radio"
         id={`question${question.id}_answer-${answer.id}`}
@@ -33,8 +39,6 @@ function QuizInfo({
       />
       <label htmlFor={`question${question.id}_answer-${answer.id}`}>
         {answer.text}
-        {isAnswered && !!isCorrect && "CORRECT"}
-        {isAnswered && !isCorrect && isSelected && "WRONG"}
       </label>
     </div>
   );

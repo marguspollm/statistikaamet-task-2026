@@ -1,0 +1,17 @@
+.answer-option {
+  border: 1px solid var(--tertiary-color);
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+}
+
+.answer-option:hover {
+  border-color: var(--primary-color);
+}
+
+.answer-option.correct {
+  border-color: var(--success-color);
+}
+
+.answer-option.wrong {
+  border-color: var(--warning-color);
+}

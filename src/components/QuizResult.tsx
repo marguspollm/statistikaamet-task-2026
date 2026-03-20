@@ -8,13 +8,13 @@ type QuizResultProps = {
 function QuizResult({ gameState }: QuizResultProps) {
   return (
     <div>
-      <section>
-        Tulemus: {gameState.score} / {gameState.questions.length}
-      </section>
       <ResultsTabel
         questions={gameState.questions}
         selectedAnswers={gameState.selectedAnswers}
       />
+      <section>
+        Tulemus: {gameState.score} / {gameState.questions.length}
+      </section>
       <ResultMessage
         score={gameState.score}
         totalQuestions={gameState.questions.length}

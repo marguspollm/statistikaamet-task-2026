@@ -1,6 +1,6 @@
 import type { AnswersState } from "../models/AnswersState";
 import type { Question } from "../models/Question";
-import { getAnswerText } from "../utils/helpers";
+import { checkCorrectAnswer, getAnswerText } from "../utils/helpers";
 
 type ResultsTableProps = {
   questions: Question[];
@@ -19,12 +19,21 @@ function ResultsTabel({ questions, selectedAnswers }: ResultsTableProps) {
       </thead>
       <tbody>
         {questions.map((question: Question) => {
+          const selectedAnswer = selectedAnswers[question.id];
           return (
-            <tr key={question.id}>
+            <tr
+              key={question.id}
+              style={{
+                backgroundColor: checkCorrectAnswer(
+                  question.correct,
+                  selectedAnswer,
+                )
+                  ? "#4DC14D"
+                  : "#DC1919",
+              }}
+            >
               <td>{question.question}</td>
-              <td>
-                {getAnswerText(question.answers, selectedAnswers[question.id])}
-              </td>
+              <td>{getAnswerText(question.answers, selectedAnswer)}</td>
               <td>{getAnswerText(question.answers, question.correct)}</td>
             </tr>
           );
