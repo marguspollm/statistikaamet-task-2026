@@ -4,7 +4,7 @@ import type { Question } from "./Question";
 
 export type GameState = {
   questions: Question[];
-  answers: AnswersState;
+  selectedAnswers: AnswersState;
   score: number;
   currentQuestionId: number;
   status: GameStatus;

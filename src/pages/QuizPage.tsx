@@ -4,33 +4,41 @@ import type { GameState } from "../models/GameState";
 import { useState } from "react";
 import type { Question } from "../models/Question";
 import QuizResult from "../components/QuizResult";
+import { checkCorrectAnswer, shuffleAnswers } from "../utils/helpers";
 
 function QuizPage() {
-  const [gameState, setGameState] = useState<GameState>({
-    questions: questionsData,
-    answers: {},
+  const [gameState, setGameState] = useState<GameState>(() => ({
+    questions: questionsData.map(question => ({
+      ...question,
+      answers: shuffleAnswers(question.answers),
+    })),
+    selectedAnswers: {},
     score: 0,
     currentQuestionId: 1,
     status: "start",
-  });
-  const [currentQuestion, setCurrentQuestion] = useState<Question>(
-    gameState.questions.filter(
-      questions => questions.id === gameState.currentQuestionId,
-    )[0],
-  );
+  }));
+  const currentQuestion: Question = gameState.questions.filter(
+    question => question.id === gameState.currentQuestionId,
+  )[0];
 
   const hasNextQuestion = currentQuestion.id < gameState.questions.length;
-  const isCurrentAnswered = gameState.answers[currentQuestion.id] !== undefined;
+  const isCurrentAnswered =
+    gameState.selectedAnswers[currentQuestion.id] !== undefined;
 
   const handleAnswerChange = (questionId: number, selectedId: number) => {
+    const newScore = checkCorrectAnswer(currentQuestion.correct, selectedId)
+      ? gameState.score + 1
+      : gameState.score;
+
     setGameState(prev => ({
       ...prev,
-      score: checkCorrectAnswer(selectedId) ? prev.score + 1 : prev.score,
-      answers: {
-        ...prev.answers,
+      score: newScore,
+      selectedAnswers: {
+        ...prev.selectedAnswers,
         [questionId]: selectedId,
       },
     }));
+
     if (!hasNextQuestion) {
       setGameState(prev => ({
         ...prev,
@@ -55,13 +63,8 @@ function QuizPage() {
       ...prev,
       currentQuestionId: newQuestionId,
     }));
-    setCurrentQuestion(gameState.questions[newQuestionId]);
   };
 
-  const checkCorrectAnswer = (selectedId: number) => {
-    return currentQuestion.correct === selectedId;
-  };
-  console.log(gameState);
   return (
     <div>
       {gameState.status === "start" && (
@@ -71,7 +74,7 @@ function QuizPage() {
         <>
           <QuizCard
             currentQuestion={currentQuestion}
-            answers={gameState.answers}
+            answers={gameState.selectedAnswers}
             onAnswerChange={handleAnswerChange}
             isCurrentAnswered={isCurrentAnswered}
           />
