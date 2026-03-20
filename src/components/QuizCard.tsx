@@ -1,55 +1,37 @@
-import { useState } from "react";
-import { questionsData } from "../utils/questions";
 import type { AnswersState } from "../models/AnswersState";
+import QuizInfo from "./QuizInfo";
+import type { Question } from "../models/Question";
 
-function QuizCard() {
-  const data = questionsData;
-  const [answers, setAnswers] = useState<AnswersState>({});
+type QuizCardProps = {
+  currentQuestion: Question;
+  answers: AnswersState;
+  onAnswerChange: (questionId: number, selectedId: number) => void;
+  isCurrentAnswered: boolean;
+};
 
-  const handleChange = (questionId: number, selectedId: number) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: selectedId,
-    }));
-  };
-
+function QuizCard({
+  currentQuestion,
+  answers,
+  onAnswerChange,
+  isCurrentAnswered,
+}: QuizCardProps) {
   return (
     <>
       <form>
-        {data.map(question => {
-          const isAnswered = answers[question.id] !== undefined;
-          return (
-            <fieldset key={question.id}>
-              <legend>{question.question}</legend>
+        <fieldset key={currentQuestion.id}>
+          <legend>{currentQuestion.question}</legend>
 
-              {question.answers.map(answer => {
-                const isSelected = answers[question.id] === answer.id;
-                const isCorrect = answer.id === question.correct;
-
-                return (
-                  <div key={answer.id}>
-                    <input
-                      type="radio"
-                      id={`question${question.id}_answer-${answer.id}`}
-                      name={`question-${question.id}`}
-                      value={answer.text}
-                      checked={answers[question.id] === answer.id}
-                      onChange={() => handleChange(question.id, answer.id)}
-                      disabled={isAnswered}
-                    />
-                    <label
-                      htmlFor={`question${question.id}_answer-${answer.id}`}
-                    >
-                      {answer.text}
-                      {isAnswered && !!isCorrect && "CORRECT"}
-                      {isAnswered && !isCorrect && isSelected && "WRONG"}
-                    </label>
-                  </div>
-                );
-              })}
-            </fieldset>
-          );
-        })}
+          {currentQuestion.answers.map(answer => (
+            <QuizInfo
+              key={answer.id}
+              answer={answer}
+              answers={answers}
+              onChange={() => onAnswerChange(currentQuestion.id, answer.id)}
+              question={currentQuestion}
+              isAnswered={isCurrentAnswered}
+            />
+          ))}
+        </fieldset>
       </form>
     </>
   );
