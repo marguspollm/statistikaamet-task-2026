@@ -1,23 +1,27 @@
 import type { GameState } from "../models/GameState";
 import ResultMessage from "./ResultMessage";
-import ResultsTabel from "./ResultsTabel";
+import ResultsTable from "./ResultsTable";
 
 type QuizResultProps = {
   gameState: GameState;
 };
 function QuizResult({ gameState }: QuizResultProps) {
   return (
-    <div>
-      <ResultsTabel
-        questions={gameState.questions}
-        selectedAnswers={gameState.selectedAnswers}
-      />
-      <section>
+    <div className="results-container">
+      <section className="results-score">
         Tulemus: {gameState.score} / {gameState.questions.length}
       </section>
-      <ResultMessage
-        score={gameState.score}
-        totalQuestions={gameState.questions.length}
+
+      <section className="results-message">
+        <ResultMessage
+          score={gameState.score}
+          totalQuestions={gameState.questions.length}
+        />
+      </section>
+
+      <ResultsTable
+        questions={gameState.questions}
+        selectedAnswers={gameState.selectedAnswers}
       />
     </div>
   );

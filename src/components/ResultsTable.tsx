@@ -7,14 +7,14 @@ type ResultsTableProps = {
   selectedAnswers: AnswersState;
 };
 
-function ResultsTabel({ questions, selectedAnswers }: ResultsTableProps) {
+function ResultsTable({ questions, selectedAnswers }: ResultsTableProps) {
   return (
     <table>
       <thead>
         <tr>
           <th>Küsimus</th>
           <th>Sinu vastus</th>
-          <th>Õige vstus</th>
+          <th>Õige vastus</th>
         </tr>
       </thead>
       <tbody>
@@ -23,16 +23,13 @@ function ResultsTabel({ questions, selectedAnswers }: ResultsTableProps) {
           return (
             <tr
               key={question.id}
-              style={{
-                backgroundColor: checkCorrectAnswer(
-                  question.correct,
-                  selectedAnswer,
-                )
-                  ? "#4DC14D"
-                  : "#DC1919",
-              }}
+              className={
+                checkCorrectAnswer(question.correct, selectedAnswer)
+                  ? "correct"
+                  : "wrong"
+              }
             >
-              <td>{question.question}</td>
+              <td>{question.text}</td>
               <td>{getAnswerText(question.answers, selectedAnswer)}</td>
               <td>{getAnswerText(question.answers, question.correct)}</td>
             </tr>
@@ -43,4 +40,4 @@ function ResultsTabel({ questions, selectedAnswers }: ResultsTableProps) {
   );
 }
 
-export default ResultsTabel;
+export default ResultsTable;

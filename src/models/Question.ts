@@ -2,7 +2,7 @@ import type { Answer } from "./Answer";
 
 export type Question = {
   id: number;
-  question: string;
+  text: string;
   answers: Answer[];
   correct: number;
 };

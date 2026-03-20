@@ -1,12 +1,13 @@
 import type { AnswersState } from "../models/AnswersState";
-import QuizInfo from "./QuizInfo";
 import type { Question } from "../models/Question";
+import QuizOptions from "./QuizOptions";
 
 type QuizCardProps = {
   currentQuestion: Question;
   answers: AnswersState;
   onAnswerChange: (questionId: number, selectedId: number) => void;
   isCurrentAnswered: boolean;
+  questionNumber: number;
 };
 
 function QuizCard({
@@ -14,15 +15,18 @@ function QuizCard({
   answers,
   onAnswerChange,
   isCurrentAnswered,
+  questionNumber,
 }: QuizCardProps) {
   return (
-    <>
-      <form>
-        <fieldset key={currentQuestion.id}>
-          <legend>{currentQuestion.question}</legend>
+    <form>
+      <fieldset key={currentQuestion.id}>
+        <legend>Küsimus nr. {questionNumber + 1}</legend>
 
+        <div className="quiz-text">{currentQuestion.text}</div>
+
+        <div className="quiz-option-container">
           {currentQuestion.answers.map(answer => (
-            <QuizInfo
+            <QuizOptions
               key={answer.id}
               answer={answer}
               answers={answers}
@@ -31,9 +35,9 @@ function QuizCard({
               isAnswered={isCurrentAnswered}
             />
           ))}
-        </fieldset>
-      </form>
-    </>
+        </div>
+      </fieldset>
+    </form>
   );
 }
 

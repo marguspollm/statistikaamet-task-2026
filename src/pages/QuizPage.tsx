@@ -4,9 +4,12 @@ import type { GameState } from "../models/GameState";
 import { useState } from "react";
 import QuizResult from "../components/QuizResult";
 import { checkCorrectAnswer, shuffleAnswers } from "../utils/helpers";
+import "../styles/results.css";
+import "../styles/quiz.css";
+import "../styles/quiz-page.css";
 
 function QuizPage() {
-  const [gameState, setGameState] = useState<GameState>(() => ({
+  const defaultGameState: GameState = {
     questions: questionsData.map(question => ({
       ...question,
       answers: shuffleAnswers(question.answers),
@@ -15,7 +18,9 @@ function QuizPage() {
     score: 0,
     currentQuestionId: 0,
     status: "start",
-  }));
+  };
+
+  const [gameState, setGameState] = useState<GameState>(defaultGameState);
 
   const currentQuestion = gameState.questions[gameState.currentQuestionId];
 
@@ -26,6 +31,7 @@ function QuizPage() {
     gameState.selectedAnswers[currentQuestion.id] !== undefined;
 
   const handleAnswerChange = (questionId: number, selectedId: number) => {
+    if (isCurrentAnswered) return;
     const newScore = checkCorrectAnswer(currentQuestion.correct, selectedId)
       ? gameState.score + 1
       : gameState.score;
@@ -65,15 +71,20 @@ function QuizPage() {
     }));
   };
 
-  console.log(gameState);
+  const handleRestart = () => {
+    setGameState(defaultGameState);
+  };
 
   return (
     <div>
       {gameState.status === "start" && (
-        <button onClick={handleStartGame}>Alusta</button>
+        <div className="quiz-start-container">
+          <h2>Küsimuste mäng</h2>
+          <button onClick={handleStartGame}>Alusta</button>
+        </div>
       )}
       {gameState.status === "inProgress" && (
-        <>
+        <div className="quiz-page-container">
           <QuizCard
             currentQuestion={currentQuestion}
             answers={gameState.selectedAnswers}
@@ -84,9 +95,14 @@ function QuizPage() {
           {hasNextQuestion && isCurrentAnswered && (
             <button onClick={handleNextQuestion}>Järgmine küsimus</button>
           )}
+        </div>
+      )}
+      {gameState.status === "finished" && (
+        <>
+          <QuizResult gameState={gameState} />
+          <button onClick={handleRestart}>Alusta uuesti</button>
         </>
       )}
-      {gameState.status === "finished" && <QuizResult gameState={gameState} />}
     </div>
   );
 }

@@ -13,7 +13,7 @@ function ResultMessage({ score, totalQuestions }: ResultMessageProps) {
     if (percent > 0) return "Kahju";
     return "Proovi uuesti";
   };
-  return <section>{setMessage()}</section>;
+  return <section className="results-message">{setMessage()}</section>;
 }
 
 export default ResultMessage;
