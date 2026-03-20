@@ -2,7 +2,6 @@ import QuizCard from "../components/QuizCard";
 import { questionsData } from "../utils/questions";
 import type { GameState } from "../models/GameState";
 import { useState } from "react";
-import type { Question } from "../models/Question";
 import QuizResult from "../components/QuizResult";
 import { checkCorrectAnswer, shuffleAnswers } from "../utils/helpers";
 
@@ -14,14 +13,15 @@ function QuizPage() {
     })),
     selectedAnswers: {},
     score: 0,
-    currentQuestionId: 1,
+    currentQuestionId: 0,
     status: "start",
   }));
-  const currentQuestion: Question = gameState.questions.filter(
-    question => question.id === gameState.currentQuestionId,
-  )[0];
 
-  const hasNextQuestion = currentQuestion.id < gameState.questions.length;
+  const currentQuestion = gameState.questions[gameState.currentQuestionId];
+
+  const hasNextQuestion =
+    gameState.currentQuestionId < gameState.questions.length - 1;
+
   const isCurrentAnswered =
     gameState.selectedAnswers[currentQuestion.id] !== undefined;
 
@@ -65,6 +65,8 @@ function QuizPage() {
     }));
   };
 
+  console.log(gameState);
+
   return (
     <div>
       {gameState.status === "start" && (
@@ -77,6 +79,7 @@ function QuizPage() {
             answers={gameState.selectedAnswers}
             onAnswerChange={handleAnswerChange}
             isCurrentAnswered={isCurrentAnswered}
+            questionNumber={gameState.currentQuestionId}
           />
           {hasNextQuestion && isCurrentAnswered && (
             <button onClick={handleNextQuestion}>Järgmine küsimus</button>
