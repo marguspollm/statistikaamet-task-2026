@@ -1,5 +1,5 @@
 import QuizCard from "../components/QuizCard";
-import { questionsData } from "../utils/questions";
+import { questionsData } from "../data/questions";
 import type { GameState } from "../models/GameState";
 import { useState } from "react";
 import QuizResult from "../components/QuizResult";
@@ -45,13 +45,13 @@ function QuizPage() {
       },
     }));
 
-    if (!hasNextQuestion) {
-      setGameState(prev => ({
-        ...prev,
-        status: "finished",
-      }));
-      return;
-    }
+    // if (!hasNextQuestion) {
+    //   setGameState(prev => ({
+    //     ...prev,
+    //     status: "finished",
+    //   }));
+    //   return;
+    // }
   };
 
   const handleStartGame = () => {
@@ -75,6 +75,16 @@ function QuizPage() {
     setGameState(defaultGameState);
   };
 
+  const handleEndGame = () => {
+    if (!hasNextQuestion) {
+      setGameState(prev => ({
+        ...prev,
+        status: "finished",
+      }));
+      return;
+    }
+  };
+
   return (
     <div>
       {gameState.status === "start" && (
@@ -94,6 +104,9 @@ function QuizPage() {
           />
           {hasNextQuestion && isCurrentAnswered && (
             <button onClick={handleNextQuestion}>Järgmine küsimus</button>
+          )}
+          {!hasNextQuestion && (
+            <button onClick={handleEndGame}>Lõpeta küsimustik</button>
           )}
         </div>
       )}

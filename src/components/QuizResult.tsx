@@ -9,7 +9,7 @@ function QuizResult({ gameState }: QuizResultProps) {
   return (
     <div className="results-container">
       <section className="results-score">
-        Tulemus: {gameState.score} / {gameState.questions.length}
+        Tulemus: {gameState.score}/{gameState.questions.length}
       </section>
 
       <section className="results-message">

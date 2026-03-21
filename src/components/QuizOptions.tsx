@@ -46,7 +46,7 @@ function QuizOptions({
       >
         <span className="radio-icon">
           {!isAnswered && <img src={RadioIcon} alt="radio" />}
-          {isAnswered && isCorrect && <img src={SuccessIcon} alt="check" />}
+          {isAnswered && isCorrect && <img src={SuccessIcon} alt="success" />}
 
           {isAnswered && isSelected && !isCorrect && (
             <img src={ErrorIcon} alt="wrong" />
