@@ -24,8 +24,8 @@ function QuizPage() {
 
   const currentQuestion = gameState.questions[gameState.currentQuestionId];
 
-  const hasNextQuestion =
-    gameState.currentQuestionId < gameState.questions.length - 1;
+  const isLastQuestion =
+    gameState.currentQuestionId === gameState.questions.length - 1;
 
   const isCurrentAnswered =
     gameState.selectedAnswers[currentQuestion.id] !== undefined;
@@ -44,14 +44,6 @@ function QuizPage() {
         [questionId]: selectedId,
       },
     }));
-
-    // if (!hasNextQuestion) {
-    //   setGameState(prev => ({
-    //     ...prev,
-    //     status: "finished",
-    //   }));
-    //   return;
-    // }
   };
 
   const handleStartGame = () => {
@@ -62,8 +54,6 @@ function QuizPage() {
   };
 
   const handleNextQuestion = () => {
-    if (!hasNextQuestion) return;
-
     const newQuestionId = gameState.currentQuestionId + 1;
     setGameState(prev => ({
       ...prev,
@@ -76,7 +66,8 @@ function QuizPage() {
   };
 
   const handleEndGame = () => {
-    if (!hasNextQuestion) {
+    if (!isCurrentAnswered) return;
+    if (isLastQuestion) {
       setGameState(prev => ({
         ...prev,
         status: "finished",
@@ -86,15 +77,15 @@ function QuizPage() {
   };
 
   return (
-    <div>
+    <div className="page-container">
       {gameState.status === "start" && (
-        <div className="quiz-start-container">
+        <div className="start-container">
           <h2>Küsimuste mäng</h2>
           <button onClick={handleStartGame}>Alusta</button>
         </div>
       )}
       {gameState.status === "inProgress" && (
-        <div className="quiz-page-container">
+        <div className="quiz-container">
           <QuizCard
             currentQuestion={currentQuestion}
             answers={gameState.selectedAnswers}
@@ -102,19 +93,19 @@ function QuizPage() {
             isCurrentAnswered={isCurrentAnswered}
             questionNumber={gameState.currentQuestionId}
           />
-          {hasNextQuestion && isCurrentAnswered && (
-            <button onClick={handleNextQuestion}>Järgmine küsimus</button>
-          )}
-          {!hasNextQuestion && (
-            <button onClick={handleEndGame}>Lõpeta küsimustik</button>
-          )}
+          <button
+            onClick={isLastQuestion ? handleEndGame : handleNextQuestion}
+            disabled={!isCurrentAnswered}
+          >
+            {isLastQuestion ? "Lõpeta küsimustik" : "Järgmine küsimus"}
+          </button>
         </div>
       )}
       {gameState.status === "finished" && (
-        <>
+        <div className="end-contaienr">
           <QuizResult gameState={gameState} />
           <button onClick={handleRestart}>Alusta uuesti</button>
-        </>
+        </div>
       )}
     </div>
   );
