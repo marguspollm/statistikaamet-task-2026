@@ -14,6 +14,15 @@
   font-variation-settings: "wdth" 100;
 }
 
+body {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    var(--primary-color) 1px,
+    transparent 0
+  );
+  background-size: 20px 20px;
+}
+
 button {
   background-color: var(--primary-color);
   color: var(--secondary-color);
@@ -29,4 +38,9 @@ button:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
   border-color: var(--primary-color);
+}
+button:disabled {
+  color: var(--secondary-color);
+  background-color: var(--tertiary-color);
+  border-color: var(--secondary-color);
 }
