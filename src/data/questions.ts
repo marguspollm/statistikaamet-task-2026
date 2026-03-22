@@ -57,7 +57,7 @@ export const questionsData: Question[] = [
     id: 6,
     text: "Millal mainiti Eestit esimest korda ajaloos?",
     answers: [
-      { id: 1, text: "1241. aastal" },
+      { id: 1, text: "56. aastal eKr" },
       { id: 2, text: "1220. aastal" },
       { id: 3, text: "1535. aastal" },
       { id: 4, text: "1857. aastal" },

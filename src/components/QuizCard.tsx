@@ -18,8 +18,8 @@ function QuizCard({
   questionNumber,
 }: QuizCardProps) {
   return (
-    <form>
-      <fieldset key={currentQuestion.id}>
+    <form className="quiz-form">
+      <fieldset key={currentQuestion.id} className="quiz-fieldset">
         <legend>Küsimus nr. {questionNumber + 1}</legend>
 
         <div className="quiz-text">{currentQuestion.text}</div>

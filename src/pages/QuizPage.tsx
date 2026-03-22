@@ -102,7 +102,7 @@ function QuizPage() {
         </div>
       )}
       {gameState.status === "finished" && (
-        <div className="end-contaienr">
+        <div className="end-container">
           <QuizResult gameState={gameState} />
           <button onClick={handleRestart}>Alusta uuesti</button>
         </div>
