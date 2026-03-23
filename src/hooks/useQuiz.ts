@@ -5,7 +5,7 @@ import { checkCorrectAnswer, shuffleAnswers } from "../utils/helpers";
 import type { Answer } from "../models/Answer";
 
 export function useQuiz() {
-  const [questions, setQuestions] = useState(() => questionsData);
+  const [questions] = useState(() => questionsData);
 
   const defaultGameState: GameState = {
     selectedAnswers: {},
