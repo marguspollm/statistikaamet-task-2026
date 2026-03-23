@@ -1,23 +1,23 @@
 import { expect, test } from "@playwright/test";
 
-test("refresh pärast alustamist", async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto("/");
-
-  await page.getByRole("button", { name: "Alusta" }).click();
-  await expect(page.getByText("Küsimus nr.")).toBeVisible();
-  await page.reload();
-  await expect(page.getByText("Küsimus nr.")).toBeVisible();
-});
-
-test("refresh pärast õiget vastust", async ({ page }) => {
-  await page.goto("/");
-
   await page.getByRole("button", { name: "Alusta" }).click();
   await expect(page.getByText("Küsimus nr.")).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Järgmine küsimus" }),
   ).toBeDisabled();
+});
 
+test("refresh pärast alustamist", async ({ page }) => {
+  await page.reload();
+  await expect(page.getByText("Küsimus nr.")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Järgmine küsimus" }),
+  ).toBeDisabled();
+});
+
+test("refresh pärast õiget vastust", async ({ page }) => {
   await page.getByText("Tallinn").click();
   await expect(page.getByRole("img", { name: "success" })).toBeVisible();
   await expect(
@@ -32,14 +32,6 @@ test("refresh pärast õiget vastust", async ({ page }) => {
 });
 
 test("refresh pärast valet vastust", async ({ page }) => {
-  await page.goto("/");
-
-  await page.getByRole("button", { name: "Alusta" }).click();
-  await expect(page.getByText("Küsimus nr.")).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Järgmine küsimus" }),
-  ).toBeDisabled();
-
   await page.getByText("Tartu").click();
   await expect(page.getByRole("img", { name: "success" })).toBeVisible();
   await expect(page.getByRole("img", { name: "wrong" })).toBeVisible();
@@ -56,9 +48,6 @@ test("refresh pärast valet vastust", async ({ page }) => {
 });
 
 test("refresh pärast lõpp tulemust", async ({ page }) => {
-  await page.goto("/");
-
-  await page.getByRole("button", { name: "Alusta" }).click();
   for (let i = 1; i < 7; i++) {
     await page.getByTestId("answer-option").first().click();
 
