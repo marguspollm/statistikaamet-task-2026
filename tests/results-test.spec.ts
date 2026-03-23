@@ -24,7 +24,9 @@ test("kuvatakse lõpptulemus ja vastused, kui valitud kõik õiged vastused", as
   }
 
   await expect(page.getByText("Tulemus: 6/6")).toBeVisible();
-  await expect(page.getByText("Super, tunned Eestimaad läbi ja lõhki"));
+  await expect(
+    page.getByText("Super, tunned Eestimaad läbi ja lõhki"),
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Alusta uuesti" }),
   ).toBeVisible();
