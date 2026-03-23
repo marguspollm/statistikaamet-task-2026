@@ -1,100 +1,51 @@
 import QuizCard from "../components/QuizCard";
-import { questionsData } from "../data/questions";
-import type { GameState } from "../models/GameState";
-import { useState } from "react";
 import QuizResult from "../components/QuizResult";
-import { checkCorrectAnswer, shuffleAnswers } from "../utils/helpers";
 import "../styles/results.css";
 import "../styles/quiz.css";
 import "../styles/quiz-page.css";
+import { useQuiz } from "../hooks/useQuiz";
 
 function QuizPage() {
-  const defaultGameState: GameState = {
-    questions: questionsData.map(question => ({
-      ...question,
-      answers: shuffleAnswers(question.answers),
-    })),
-    selectedAnswers: {},
-    score: 0,
-    currentQuestionId: 0,
-    status: "start",
-  };
+  const {
+    gameState,
+    currentQuestion,
+    isCurrentAnswered,
+    isLastQuestion,
+    questions,
+    answerQuestion,
+    nextQuestion,
+    start,
+    end,
+    restart,
+    getShuffledOrder,
+  } = useQuiz();
 
-  const [gameState, setGameState] = useState<GameState>(defaultGameState);
+  const order = getShuffledOrder(currentQuestion.id, currentQuestion.answers);
 
-  const currentQuestion = gameState.questions[gameState.currentQuestionId];
-
-  const isLastQuestion =
-    gameState.currentQuestionId === gameState.questions.length - 1;
-
-  const isCurrentAnswered =
-    gameState.selectedAnswers[currentQuestion.id] !== undefined;
-
-  const handleAnswerChange = (questionId: number, selectedId: number) => {
-    if (isCurrentAnswered) return;
-    const newScore = checkCorrectAnswer(currentQuestion.correct, selectedId)
-      ? gameState.score + 1
-      : gameState.score;
-
-    setGameState(prev => ({
-      ...prev,
-      score: newScore,
-      selectedAnswers: {
-        ...prev.selectedAnswers,
-        [questionId]: selectedId,
-      },
-    }));
-  };
-
-  const handleStartGame = () => {
-    setGameState(prev => ({
-      ...prev,
-      status: "inProgress",
-    }));
-  };
-
-  const handleNextQuestion = () => {
-    const newQuestionId = gameState.currentQuestionId + 1;
-    setGameState(prev => ({
-      ...prev,
-      currentQuestionId: newQuestionId,
-    }));
-  };
-
-  const handleRestart = () => {
-    setGameState(defaultGameState);
-  };
-
-  const handleEndGame = () => {
-    if (!isCurrentAnswered) return;
-    if (isLastQuestion) {
-      setGameState(prev => ({
-        ...prev,
-        status: "finished",
-      }));
-      return;
-    }
-  };
+  const orderedAnswers = order.map(
+    id => currentQuestion.answers.find(a => a.id === id)!,
+  );
 
   return (
     <div className="page-container">
       {gameState.status === "start" && (
         <div className="start-container">
           <h2>Küsimuste mäng</h2>
-          <button onClick={handleStartGame}>Alusta</button>
+          <button onClick={start}>Alusta</button>
         </div>
       )}
       {gameState.status === "inProgress" && (
         <div className="quiz-container">
           <QuizCard
             currentQuestion={currentQuestion}
-            answers={gameState.selectedAnswers}
-            onAnswerChange={handleAnswerChange}
+            selectedAnswers={gameState.selectedAnswers}
+            onAnswerChange={answerQuestion}
             isCurrentAnswered={isCurrentAnswered}
             questionNumber={gameState.currentQuestionId}
+            orderedAnswers={orderedAnswers}
           />
           <button
-            onClick={isLastQuestion ? handleEndGame : handleNextQuestion}
+            onClick={isLastQuestion ? end : nextQuestion}
             disabled={!isCurrentAnswered}
           >
             {isLastQuestion ? "Lõpeta küsimustik" : "Järgmine küsimus"}
@@ -103,8 +54,12 @@ function QuizPage() {
       )}
       {gameState.status === "finished" && (
         <div className="end-container">
-          <QuizResult gameState={gameState} />
-          <button onClick={handleRestart}>Alusta uuesti</button>
+          <QuizResult
+            score={gameState.score}
+            questions={questions}
+            selectedAnswers={gameState.selectedAnswers}
+          />
+          <button onClick={restart}>Alusta uuesti</button>
         </div>
       )}
     </div>

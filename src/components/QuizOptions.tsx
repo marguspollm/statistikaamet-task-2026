@@ -1,6 +1,5 @@
 import type { Answer } from "../models/Answer";
 import type { AnswersState } from "../models/AnswersState";
-import type { Question } from "../models/Question";
 import ErrorIcon from "../assets/error.svg";
 import SuccessIcon from "../assets/success.svg";
 import RadioIcon from "../assets/radio-default.svg";
@@ -8,7 +7,8 @@ import RadioIcon from "../assets/radio-default.svg";
 type QuizInfoProps = {
   answers: AnswersState;
   answer: Answer;
-  question: Question;
+  id: number;
+  correctId: number;
   isAnswered: boolean;
   onChange: () => void;
 };
@@ -16,12 +16,13 @@ type QuizInfoProps = {
 function QuizOptions({
   answers,
   answer,
-  question,
+  id,
+  correctId,
   isAnswered,
   onChange,
 }: QuizInfoProps) {
-  const isSelected = answers[question.id] === answer.id;
-  const isCorrect = answer.id === question.correct;
+  const isSelected = answers[id] === answer.id;
+  const isCorrect = answer.id === correctId;
 
   return (
     <div
@@ -33,15 +34,15 @@ function QuizOptions({
     >
       <input
         type="radio"
-        id={`question${question.id}_answer-${answer.id}`}
-        name={`question-${question.id}`}
+        id={`question${id}_answer-${answer.id}`}
+        name={`question-${id}`}
         value={answer.text}
-        checked={answers[question.id] === answer.id}
+        checked={answers[id] === answer.id}
         onChange={e => e.preventDefault()}
         disabled={isAnswered}
       />
       <label
-        htmlFor={`question${question.id}_answer-${answer.id}`}
+        htmlFor={`question${id}_answer-${answer.id}`}
         onClick={e => e.preventDefault()}
       >
         <span className="radio-icon">

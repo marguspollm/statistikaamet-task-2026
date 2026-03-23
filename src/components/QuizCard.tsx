@@ -1,21 +1,24 @@
+import type { Answer } from "../models/Answer";
 import type { AnswersState } from "../models/AnswersState";
 import type { Question } from "../models/Question";
 import QuizOptions from "./QuizOptions";
 
 type QuizCardProps = {
   currentQuestion: Question;
-  answers: AnswersState;
+  selectedAnswers: AnswersState;
   onAnswerChange: (questionId: number, selectedId: number) => void;
   isCurrentAnswered: boolean;
   questionNumber: number;
+  orderedAnswers: Answer[];
 };
 
 function QuizCard({
   currentQuestion,
-  answers,
+  selectedAnswers,
   onAnswerChange,
   isCurrentAnswered,
   questionNumber,
+  orderedAnswers,
 }: QuizCardProps) {
   return (
     <form className="quiz-form">
@@ -25,13 +28,14 @@ function QuizCard({
         <div className="quiz-text">{currentQuestion.text}</div>
 
         <div className="quiz-option-container">
-          {currentQuestion.answers.map(answer => (
+          {orderedAnswers.map(answer => (
             <QuizOptions
               key={answer.id}
               answer={answer}
-              answers={answers}
+              answers={selectedAnswers}
               onChange={() => onAnswerChange(currentQuestion.id, answer.id)}
-              question={currentQuestion}
+              id={currentQuestion.id}
+              correctId={currentQuestion.correct}
               isAnswered={isCurrentAnswered}
             />
           ))}
