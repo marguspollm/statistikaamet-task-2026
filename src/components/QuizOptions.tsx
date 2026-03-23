@@ -31,10 +31,11 @@ function QuizOptions({
         ${isAnswered && isCorrect ? "correct" : ""} 
         ${isAnswered && !isCorrect && isSelected ? "wrong" : ""}`}
       onClick={onChange}
+      data-testid="answer-option"
     >
       <input
         type="radio"
-        id={`question${id}_answer-${answer.id}`}
+        id={`question-${id}_answer-${answer.id}`}
         name={`question-${id}`}
         value={answer.text}
         checked={answers[id] === answer.id}
@@ -42,7 +43,7 @@ function QuizOptions({
         disabled={isAnswered}
       />
       <label
-        htmlFor={`question${id}_answer-${answer.id}`}
+        htmlFor={`question-${id}_answer-${answer.id}`}
         onClick={e => e.preventDefault()}
       >
         <span className="radio-icon">

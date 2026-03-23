@@ -8,7 +8,7 @@ test("leht avaneb", async ({ page }) => {
   await expect(page).toHaveTitle(/statistikaamet-task-2026/);
 });
 
-test("küsimus", async ({ page }) => {
+test("vajuta Alusta", async ({ page }) => {
   await page.goto("/");
 
   await page.getByRole("button", { name: "Alusta" }).click();
@@ -23,6 +23,7 @@ test("vastab küsimus õige", async ({ page }) => {
 
   await page.getByText("Tallinn").click();
   await expect(page.getByRole("img", { name: "success" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "wrong" })).toBeHidden();
 });
 
 test("vastab küsimus vale", async ({ page }) => {
@@ -33,6 +34,7 @@ test("vastab küsimus vale", async ({ page }) => {
 
   await page.getByText("Tartu").click();
   await expect(page.getByRole("img", { name: "wrong" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "success" })).toBeVisible();
 });
 
 test("lõpp tulemus kõik õiged", async ({ page }) => {
