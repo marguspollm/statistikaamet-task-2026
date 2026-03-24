@@ -28,7 +28,7 @@ function QuizOptions({
     <div
       key={answer.id}
       className={`quiz-option 
-        ${isAnswered && isCorrect ? "correct" : ""} 
+        ${isAnswered && isCorrect && isSelected ? "correct" : ""} 
         ${isAnswered && !isCorrect && isSelected ? "wrong" : ""}`}
       onClick={onChange}
       data-testid="answer-option"
@@ -48,14 +48,14 @@ function QuizOptions({
       >
         <span className="radio-icon">
           {!isAnswered && <img src={RadioIcon} alt="radio" />}
-          {isAnswered && isCorrect && <img src={SuccessIcon} alt="success" />}
+          {isAnswered && isSelected && isCorrect && (
+            <img src={SuccessIcon} alt="success" />
+          )}
 
           {isAnswered && isSelected && !isCorrect && (
             <img src={ErrorIcon} alt="wrong" />
           )}
-          {isAnswered && !isSelected && !isCorrect && (
-            <img src={RadioIcon} alt="radio" />
-          )}
+          {isAnswered && !isSelected && <img src={RadioIcon} alt="radio" />}
         </span>
         {answer.text}
       </label>

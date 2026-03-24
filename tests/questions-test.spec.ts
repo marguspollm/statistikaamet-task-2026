@@ -18,5 +18,5 @@ test("kuvatakse õige ja vale vastus, kui valitud vale vastus", async ({
 }) => {
   await page.getByText("Tartu").click();
   await expect(page.getByRole("img", { name: "wrong" })).toBeVisible();
-  await expect(page.getByRole("img", { name: "success" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "success" })).toBeHidden();
 });

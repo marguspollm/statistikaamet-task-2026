@@ -33,14 +33,14 @@ test("refresh pärast õiget vastust", async ({ page }) => {
 
 test("refresh pärast valet vastust", async ({ page }) => {
   await page.getByText("Tartu").click();
-  await expect(page.getByRole("img", { name: "success" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "success" })).toBeHidden();
   await expect(page.getByRole("img", { name: "wrong" })).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Järgmine küsimus" }),
   ).toBeEnabled();
 
   await page.reload();
-  await expect(page.getByRole("img", { name: "success" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "success" })).toBeHidden();
   await expect(page.getByRole("img", { name: "wrong" })).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Järgmine küsimus" }),
