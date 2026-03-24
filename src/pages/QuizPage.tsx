@@ -30,7 +30,7 @@ function QuizPage() {
     <div className="page-container">
       {gameState.status === "start" && (
         <div className="start-container">
-          <h2>Küsimuste mäng</h2>
+          <h2>Küsimustik</h2>
           <button onClick={start}>Alusta</button>
         </div>
       )}
