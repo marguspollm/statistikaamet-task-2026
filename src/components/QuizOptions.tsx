@@ -24,12 +24,33 @@ function QuizOptions({
   const isSelected = answers[id] === answer.id;
   const isCorrect = answer.id === correctId;
 
+  const getSrc = () => {
+    if (!isAnswered) return RadioIcon;
+    if (isSelected && isCorrect) return SuccessIcon;
+    if (isSelected && !isCorrect) return ErrorIcon;
+    return RadioIcon;
+  };
+  const getAlt = () => {
+    if (!isAnswered) return "radio";
+    if (isSelected && isCorrect) return "success";
+    if (isSelected && !isCorrect) return "wrong";
+    return "radio";
+  };
+
+  const getDivBorderStyle =
+    isAnswered && isSelected
+      ? isCorrect
+        ? "correct"
+        : !isCorrect
+          ? "wrong"
+          : ""
+      : "";
+
   return (
     <div
       key={answer.id}
       className={`quiz-option 
-        ${isAnswered && isCorrect && isSelected ? "correct" : ""} 
-        ${isAnswered && !isCorrect && isSelected ? "wrong" : ""}`}
+        ${getDivBorderStyle}`}
       onClick={onChange}
       data-testid="answer-option"
     >
@@ -47,15 +68,7 @@ function QuizOptions({
         onClick={e => e.preventDefault()}
       >
         <span className="radio-icon">
-          {!isAnswered && <img src={RadioIcon} alt="radio" />}
-          {isAnswered && isSelected && isCorrect && (
-            <img src={SuccessIcon} alt="success" />
-          )}
-
-          {isAnswered && isSelected && !isCorrect && (
-            <img src={ErrorIcon} alt="wrong" />
-          )}
-          {isAnswered && !isSelected && <img src={RadioIcon} alt="radio" />}
+          <img src={getSrc()} alt={getAlt()} />
         </span>
         {answer.text}
       </label>
