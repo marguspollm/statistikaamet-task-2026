@@ -8,6 +8,8 @@
   padding: 25px;
   background-color: var(--secondary-color);
   width: min(500px);
+  border: 1px solid var(--primary-color);
+  box-sizing: border-box;
 }
 
 .startContainer h2 {

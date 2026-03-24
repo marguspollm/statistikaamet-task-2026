@@ -5,6 +5,8 @@
   gap: 24px;
   padding: 32px;
   background-color: var(--secondary-color);
+  border: 1px solid var(--primary-color);
+  box-sizing: border-box;
 }
 
 .resultsScore {
