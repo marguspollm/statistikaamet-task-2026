@@ -14,7 +14,7 @@ export const questionsData: Question[] = [
   },
   {
     id: 2,
-    text: "Mis on Eesti suurim saar?",
+    text: "Milline neist on Eesti suurim saar?",
     answers: [
       { id: 1, text: "Saaremaa" },
       { id: 2, text: "Suur-Pakri" },
@@ -44,7 +44,7 @@ export const questionsData: Question[] = [
   },
   {
     id: 5,
-    text: "Kui pikk on Eesti maismaapiiri kogupikkus",
+    text: "Kui pikk on Eesti maismaapiiri kogupikkus?",
     answers: [
       { id: 1, text: "833" },
       { id: 2, text: "933" },
