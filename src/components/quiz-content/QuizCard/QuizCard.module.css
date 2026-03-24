@@ -1,0 +1,42 @@
+.quizForm,
+.quizFieldset {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  box-sizing: border-box;
+}
+
+.quizText {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.quizOptionContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .quizContainer {
+    padding: 16px;
+  }
+
+  .quizOptionContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .quizContainer {
+    padding: 12px;
+  }
+}

@@ -1,8 +1,9 @@
-import type { Answer } from "../models/Answer";
-import type { AnswersState } from "../models/AnswersState";
-import ErrorIcon from "../assets/error.svg";
-import SuccessIcon from "../assets/success.svg";
-import RadioIcon from "../assets/radio-default.svg";
+import type { Answer } from "../../../models/Answer";
+import type { AnswersState } from "../../../models/AnswersState";
+import ErrorIcon from "../../../assets/error.svg";
+import SuccessIcon from "../../../assets/success.svg";
+import RadioIcon from "../../../assets/radio-default.svg";
+import styles from "./QuizOption.module.css";
 
 type QuizInfoProps = {
   answers: AnswersState;
@@ -49,7 +50,7 @@ function QuizOptions({
   return (
     <div
       key={answer.id}
-      className={`quiz-option 
+      className={`${styles.quizOption}
         ${getDivBorderStyle}`}
       onClick={onChange}
       data-testid="answer-option"
@@ -67,7 +68,7 @@ function QuizOptions({
         htmlFor={`question-${id}_answer-${answer.id}`}
         onClick={e => e.preventDefault()}
       >
-        <span className="radio-icon">
+        <span className={styles.radioIcon}>
           <img src={getSrc()} alt={getAlt()} />
         </span>
         {answer.text}

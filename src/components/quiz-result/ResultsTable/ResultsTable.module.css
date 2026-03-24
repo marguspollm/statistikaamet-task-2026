@@ -1,0 +1,31 @@
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.resultsTable th,
+.resultsTable td {
+  padding: 12px 16px;
+  border: 2px solid var(--primary-color);
+}
+
+.resultsTable th {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.correct {
+  background-color: var(--success-secondary-color);
+}
+
+.wrong {
+  background-color: var(--warning-secondary-color);
+}
+
+.resultsTable tbody tr:hover {
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}

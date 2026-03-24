@@ -1,6 +1,7 @@
-import type { AnswersState } from "../models/AnswersState";
-import type { Question } from "../models/Question";
-import { checkCorrectAnswer, getAnswerText } from "../utils/helpers";
+import type { AnswersState } from "../../../models/AnswersState";
+import type { Question } from "../../../models/Question";
+import { checkCorrectAnswer, getAnswerText } from "../../../utils/helpers";
+import styles from "./ResultsTable.module.css";
 
 type ResultsTableProps = {
   questions: Question[];
@@ -9,7 +10,7 @@ type ResultsTableProps = {
 
 function ResultsTable({ questions, selectedAnswers }: ResultsTableProps) {
   return (
-    <table>
+    <table className={styles.resultsTable}>
       <thead>
         <tr>
           <th>Küsimus</th>
@@ -25,8 +26,8 @@ function ResultsTable({ questions, selectedAnswers }: ResultsTableProps) {
               key={question.id}
               className={
                 checkCorrectAnswer(question.correct, selectedAnswer)
-                  ? "correct"
-                  : "wrong"
+                  ? styles.correct
+                  : styles.wrong
               }
             >
               <td>{question.text}</td>

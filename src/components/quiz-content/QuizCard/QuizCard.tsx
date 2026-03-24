@@ -1,7 +1,8 @@
-import type { Answer } from "../models/Answer";
-import type { AnswersState } from "../models/AnswersState";
-import type { Question } from "../models/Question";
-import QuizOptions from "./QuizOptions";
+import type { Answer } from "../../../models/Answer";
+import type { AnswersState } from "../../../models/AnswersState";
+import type { Question } from "../../../models/Question";
+import QuizOption from "../QuizOption/QuizOption";
+import styles from "./QuizCard.module.css";
 
 type QuizCardProps = {
   currentQuestion: Question;
@@ -21,15 +22,15 @@ function QuizCard({
   orderedAnswers,
 }: QuizCardProps) {
   return (
-    <form className="quiz-form">
-      <fieldset key={currentQuestion.id} className="quiz-fieldset">
+    <form className={styles.quizForm}>
+      <fieldset key={currentQuestion.id} className={styles.quizFieldset}>
         <legend>Küsimus nr. {questionNumber + 1}</legend>
 
-        <div className="quiz-text">{currentQuestion.text}</div>
+        <div className={styles.quizText}>{currentQuestion.text}</div>
 
-        <div className="quiz-option-container">
+        <div className={styles.quizOptionContainer}>
           {orderedAnswers.map(answer => (
-            <QuizOptions
+            <QuizOption
               key={answer.id}
               answer={answer}
               answers={selectedAnswers}

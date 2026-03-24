@@ -1,4 +1,4 @@
-import QuizPage from "./pages/QuizPage";
+import QuizPage from "./pages/QuizPage/QuizPage";
 
 function App() {
   return <QuizPage />;

@@ -1,0 +1,50 @@
+.quizOption {
+  border: 1px solid var(--tertiary-color);
+  padding: 12px 14px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.quizOption:hover {
+  border-color: var(--primary-color);
+}
+
+.quizOption.correct {
+  border-color: var(--success-color);
+}
+
+.quizOption.wrong {
+  border-color: var(--warning-color);
+}
+
+.quizOption input[type="radio"] {
+  display: none;
+}
+
+.quizOption label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.radioIcon svg {
+  width: 5px;
+  height: 5px;
+}
+
+.quizOption.correct svg {
+  stroke: var(--success-color);
+}
+
+.quizOption.wrong svg {
+  stroke: var(--warning-color);
+}
+
+.quizOption:hover svg {
+  opacity: 0.8;
+}
